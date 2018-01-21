@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/20 15:02:19 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/20 15:50:06 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,17 @@
 
 #include "libft/libft.h"
 #include "mlx.h"
-#define BUFF_SIZE 50
+#include <fcntl.h>
+
+typedef struct	s_double
+{
+	char			*line;
+	char			*str;
+	int				count;
+	int				lines;
+	int				fd;
+	struct s_double	*next;
+}				t_double;
 
 typedef struct	s_graph
 {
@@ -35,10 +45,9 @@ typedef struct	s_image
 
 typedef struct	s_lines
 {
-	char	**num;
-	t_list	*next;
-}				t_lines;
-
+	char			**num;
+	struct s_lines	*next;
+}					t_lines;
 
 typedef struct	s_map
 {
@@ -47,4 +56,5 @@ typedef struct	s_map
 	int		y_length;
 
 }				t_map;
+int				get_next_line(int fd, char **line);
 #endif
