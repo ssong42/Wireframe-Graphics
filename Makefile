@@ -6,15 +6,37 @@
 #    By: ssong <marvin@42.fr>                       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/01/20 14:47:28 by ssong             #+#    #+#              #
-#    Updated: 2018/01/20 15:00:15 by ssong            ###   ########.fr        #
+#    Updated: 2018/01/21 19:10:01 by ssong            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-all: obj $(MAKELIB) $(MAKEMLX) $(
+NAME = fdf
+FLAGS = -Wall -Werror -Wextra
+SRCS = ./
+INCLUDE = ./
+FILES = main linkedlines readmap get_next_line
+LIB = libft/libft.a miniLibX/libmlx.a
+MLXLINK = -framework OpenGl -framework Appkit
 
-$(MAKELIB):
-	make -C libft
+CFILES = $(patsubst %, $(SRCS)%.c, $(FILES))
+OFILES = $(patsubst %, $(SRCS)%.c, $(FILES))
 
-$(MAKEMLX):
-	make -C miniLibX
+all: $(LIB) $(MLXLINK) $(NAME)
 
+$(LIB):
+	make -C libft/.
+	
+$(MLXLINK):
+	make -C miniLibX/.
+
+$(NAME):
+	gcc $(FLAGS) $(CFILES) $(LIB) -I. -I miniLibX/. $(MLXLINK) -o $(NAME)
+
+clean:
+	rm -f fdf
+
+fclean: clean
+	make fclean -C ./libft
+	make clean -C ./miniLibX
+
+re: fclean all

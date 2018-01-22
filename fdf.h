@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/20 15:50:06 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/21 18:16:34 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,4 +57,10 @@ typedef struct	s_map
 
 }				t_map;
 int				get_next_line(int fd, char **line);
+void			convertodouble(t_map **map, t_lines *list);
+void			malloctosize(t_map **map);
+int				ft_findwidth(char *line);
+int				read_map(int fd, t_map **map);
+t_lines			*createlink();
+t_lines			*addnmove(t_lines *list);
 #endif
