@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 18:08:50 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/21 18:16:42 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/24 14:12:10 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,17 @@ int		read_map(int fd, t_map **map)
 			if (ft_findwidth(line) != (*map)->x_width)
 				return (0);
 		lines->num = ft_strsplit(line, ' ');
+		lines->y = (*map)->y_length;
 		(*map)->y_length++;
 		lines =	addnmove(lines);
 	}
-	malloctosize(map);
-	converttodouble(map, head);
+	// the t_list of lines need to store their respective y locations for use later
+	// mallocanarray of a struct for the verticies in side the map: with the size of (x_width * y_width + 1); NULL TERMINATED
+	// Convert the t_list of lines into x, y, and z data within the array of structs. Traversal within the lines and
+	// traversal within the array will be different.
+	//
+	//malloctosize(map);
+	//converttodouble(map, head);
 	return (1);
 }
 

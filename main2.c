@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 10:54:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/23 19:06:53 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/24 14:14:18 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ int main(int argc, char **argv)
 	t_map	*map;
 	t_graph *window;
 	t_image	*img;
-	int y;
-	int x;
 
-	y = 0;
-	x = 0;
 	if (argc != 2)
 	{
 		ft_putendl("usage:/ one file needed");
@@ -53,26 +49,6 @@ int main(int argc, char **argv)
 		ft_putendl("map error");
 		return (0);
 	}
-	img = malloc(sizeof(t_image));
-	window = malloc(sizeof(t_graph));
-	window->mlx = mlx_init();
-	window->win = mlx_new_window(window->mlx, 1200, 720, "mlx 42");
-	img->image = mlx_new_image(window->mlx, 1200, 700);
-	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->sizeline, &img->endian);
-	img->bpp /= 8;
-	img->dist = 15;
-	while (y < map->y_length)
-	{
-		x = 0;
-		while (x < map->x_width)
-		{
-			*(int *)(img->ptr + (x * img->dist * img->bpp + (y * img->dist * img->sizeline))) = 0xFFFFFF;
-			x++;
-		}
-		y++;
-	}
-	mlx_put_image_to_window(window->mlx, window->win, img->image, 50, 50);
-	mlx_loop(window->mlx);
 	return (0);
 }
 
