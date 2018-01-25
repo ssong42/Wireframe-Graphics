@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 10:54:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/25 14:32:11 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/25 14:45:13 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,22 @@ void	printmap(t_map *map)
 	}
 }
 
+void	initiate(t_win **window, t_image **img)
+{
+	(*img) = malloc(sizeof(t_image));
+	(*window) = malloc(sizeof(t_win));
+	(*window)->mlx = mlx_init();
+	(*window)->win = mlx_new_window((*window)->mlx, 1200, 700, "mlx 42");
+	(*img)->image = mlx_new_image((*window)->mlx, 1200, 700);
+	(*img)->ptr = mlx_get_data_addr((*img)->image, &(*img)->bpp, &(*img)->sizeline, &(*img)->endian);
+	(*img)->bpp /= 8;
+}
+
 int main(int argc, char **argv)
 {
 	int		fd;
 	t_map	*map;
-	t_graph *window;
+	t_win *window;
 	t_image	*img;
 
 	if (argc != 2)
@@ -45,13 +56,8 @@ int main(int argc, char **argv)
 		ft_putendl("map error");
 		return (0);
 	}
-	img = malloc(sizeof(t_image));
-	window = malloc(sizeof(t_graph));
-	window->mlx = mlx_init();
-	window->win = mlx_new_window(window->mlx, 1200, 700, "mlx 42");
-	img->image = mlx_new_image(window->mlx, 1200, 700);
-	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->sizeline, &img->endian);
-	img->bpp /= 8;
+	map = transformation(map);
+	initiate(&window, &img);
 	int i = 0;
 	while (i < (map->x_width * map->y_length))
 	{

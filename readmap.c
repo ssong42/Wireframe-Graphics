@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 18:08:50 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/24 14:12:10 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/25 13:47:19 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,6 @@ int		issign(char c)
 	if (c == '-' || c == '+')
 		return (1);
 	return (0);
-}
-
-void	converttodouble(t_map **map, t_lines *list)
-{
-	int y;
-	int x;
-
-	y = 0;
-	while (y < (*map)->y_length)
-	{
-		x = 0;
-		while (x < (*map)->x_width)
-		{
-			(*map)->map[y][x] = ft_atoi(list->num[x]);
-			x++;
-		}
-		list = list->next;
-		y++;
-	}
-}
-
-void	malloctosize(t_map **map)
-{
-	int y;
-
-	y = 0;
-	(*map)->map = (double**)malloc(sizeof(double*) * (*map)->y_length);
-	while (y <= (*map)->y_length)
-	{
-		(*map)->map[y] = (double*)malloc(sizeof(double) * (*map)->x_width + 1);
-		y++;
-	}
 }
 
 int		ft_findwidth(char *line)
@@ -80,6 +48,46 @@ int		ft_findwidth(char *line)
 	return (count);	
 }
 
+char	*ft_strjoinfree(char *final, char *end)
+{
+	char *buf;
+	
+	buf = final;
+	final = ft_strjoin(buf, end);
+	free(buf);
+	return (final);
+}
+
+t_map	*chartostruct(char **longmap, t_map *map)
+{
+	int i;
+
+	i = 0;
+	map->vertices = malloc(sizeof(t_vertic) * (map->x_width * map->y_length));
+	while (i < (map->x_width * map->y_length))
+	{
+		map->vertices[i].x = i % map->x_width;
+		map->vertices[i].y = i / map->x_width;
+		map->vertices[i].z = (double)(ft_atoi(longmap[i]));
+		map->vertices[i].w = 1;
+		map->vertices[i].color = 0xFFFFFF;
+		i++;
+	}
+	return (map);
+}
+
+void	freestr(char **longmap, int x, int y)
+{
+	int i;
+
+	i = 0;
+	while (i < (x * y))
+	{
+		free (longmap[i]);
+		i++;
+	}
+}
+
 /*
 this part was a little rough but i got it to work. This function will go through the string
 and count how many numbers there are. Also this will account for errors in the line
@@ -90,14 +98,13 @@ the number of columns match.
 
 int		read_map(int fd, t_map **map)
 {
-	t_lines	*lines;
-	t_lines	*head;
 	char	*line;
+	char	*final;
+	char	**longmap;
 
-	lines = createlink();
-	head = lines;
 	(*map) = malloc(sizeof(t_map));
 	(*map)->y_length = 0;
+	final = NULL;
 	while (get_next_line(fd, &line))
 	{
 		if ((*map)->y_length == 0)
@@ -108,18 +115,13 @@ int		read_map(int fd, t_map **map)
 		else
 			if (ft_findwidth(line) != (*map)->x_width)
 				return (0);
-		lines->num = ft_strsplit(line, ' ');
-		lines->y = (*map)->y_length;
 		(*map)->y_length++;
-		lines =	addnmove(lines);
+		line = ft_strjoinfree(line, " ");
+		final = ft_strjoinfree(final, line);
 	}
-	// the t_list of lines need to store their respective y locations for use later
-	// mallocanarray of a struct for the verticies in side the map: with the size of (x_width * y_width + 1); NULL TERMINATED
-	// Convert the t_list of lines into x, y, and z data within the array of structs. Traversal within the lines and
-	// traversal within the array will be different.
-	//
-	//malloctosize(map);
-	//converttodouble(map, head);
+	longmap = ft_strsplit(final, ' ');
+	*map = chartostruct(longmap, *map);
+	freestr(longmap, (*map)->x_width, (*map)->y_length);
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 10:54:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/25 10:03:10 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/25 14:45:13 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,37 @@
 
 void	printmap(t_map *map)
 {
-	int x;
-	int y;
+	int i;
 
-	y = 0;
-	while (y < map->y_length)
+	i = 0;
+	while (i < (map->x_width * map->y_length))
 	{
-		x = 0;
-		while (x < map->x_width)
-		{
-			printf("%f ", map->map[y][x]);
-			x++;
-		}
-		printf("\n");
-		y++;
+		printf("(%d, %d) ", map->vertices[i].x, map->vertices[i].y);
+		//printf("%d ", (int)map->vertices[i].z);
+		i++;
+		if (i % map->x_width == 0)
+			printf("\n");
 	}
+}
+
+void	initiate(t_win **window, t_image **img)
+{
+	(*img) = malloc(sizeof(t_image));
+	(*window) = malloc(sizeof(t_win));
+	(*window)->mlx = mlx_init();
+	(*window)->win = mlx_new_window((*window)->mlx, 1200, 700, "mlx 42");
+	(*img)->image = mlx_new_image((*window)->mlx, 1200, 700);
+	(*img)->ptr = mlx_get_data_addr((*img)->image, &(*img)->bpp, &(*img)->sizeline, &(*img)->endian);
+	(*img)->bpp /= 8;
 }
 
 int main(int argc, char **argv)
 {
 	int		fd;
 	t_map	*map;
-	t_graph *window;
+	t_win *window;
 	t_image	*img;
-	int y;
-	int x;
 
-	y = 0;
-	x = 0;
 	if (argc != 2)
 	{
 		ft_putendl("usage:/ one file needed");
@@ -53,26 +56,19 @@ int main(int argc, char **argv)
 		ft_putendl("map error");
 		return (0);
 	}
-	img = malloc(sizeof(t_image));
-	window = malloc(sizeof(t_graph));
-	window->mlx = mlx_init();
-	window->win = mlx_new_window(window->mlx, 1200, 720, "mlx 42");
-	img->image = mlx_new_image(window->mlx, 1200, 700);
-	img->ptr = mlx_get_data_addr(img->image, &img->bpp, &img->sizeline, &img->endian);
-	img->bpp /= 8;
-	img->dist = 15;
-	while (y < map->y_length)
+	initiate(&window, &img);
+	int i = 0;
+	while (i < (map->x_width * map->y_length))
 	{
-		x = 0;
-		while (x < map->x_width)
-		{
-			*(int *)(img->ptr + (x * img->dist * img->bpp + (y * img->dist * img->sizeline))) = 0xFFFFFF;
-			x++;
-		}
-		y++;
+		if (map->vertices[i].x < 1200)
+			if (map->vertices[i].y < 700)
+				*(int *)(img->ptr + (map->vertices[i].x * img->bpp + (map->vertices[i].y * img->sizeline))) = map->vertices[i].color;
+		i++;
 	}
-	mlx_put_image_to_window(window->mlx, window->win, img->image, 50, 50);
+	mlx_put_image_to_window(window->mlx, window->win, img->image, 0, 0);
 	mlx_loop(window->mlx);
+
+	//printmap(map);
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/25 14:25:07 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/25 14:42:22 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ typedef struct	s_double
 	struct s_double	*next;
 }				t_double;
 
-typedef struct	s_graph
+typedef struct	s_win
 {
 	void	*mlx;
 	void	*win;
-}				t_graph;
+}				t_win;
 
 typedef struct	s_vertic
 {
