@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/24 13:46:05 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/25 14:25:07 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ typedef struct	s_graph
 	void	*win;
 }				t_graph;
 
+typedef struct	s_vertic
+{
+	int		x;
+	int		y;
+	double	z;
+	int		color;
+	int		w;
+}				t_vertic;
+
 typedef struct	s_image
 {
 	void			*image;
@@ -53,9 +62,9 @@ typedef struct	s_lines
 
 typedef struct	s_map
 {
-	double	**map;
-	int		x_width;
-	int		y_length;
+	t_vertic	*vertices;
+	int			x_width;
+	int			y_length;
 }				t_map;
 
 int				get_next_line(int fd, char **line);
