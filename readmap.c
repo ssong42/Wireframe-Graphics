@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 18:08:50 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/25 13:47:19 by ssong            ###   ########.fr       */
+/*   Updated: 2018/01/27 12:52:04 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		read_map(int fd, t_map **map)
 
 	(*map) = malloc(sizeof(t_map));
 	(*map)->y_length = 0;
+	(*map)->scale = 1;
 	final = NULL;
 	while (get_next_line(fd, &line))
 	{
