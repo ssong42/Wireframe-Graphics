@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 18:08:50 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/27 12:52:04 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/05 09:49:11 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ t_map	*chartostruct(char **longmap, t_map *map)
 	map->vertices = malloc(sizeof(t_vertic) * (map->x_width * map->y_length));
 	while (i < (map->x_width * map->y_length))
 	{
-		map->vertices[i].x = i % map->x_width;
-		map->vertices[i].y = i / map->x_width;
+		map->vertices[i].x = i % (int)map->x_width * map->scale;
+		map->vertices[i].y = i / (int)map->x_width * map->scale;
 		map->vertices[i].z = (double)(ft_atoi(longmap[i]));
 		map->vertices[i].w = 1;
 		map->vertices[i].color = 0xFFFFFF;
@@ -104,7 +104,7 @@ int		read_map(int fd, t_map **map)
 
 	(*map) = malloc(sizeof(t_map));
 	(*map)->y_length = 0;
-	(*map)->scale = 1;
+	(*map)->scale = 20;
 	final = NULL;
 	while (get_next_line(fd, &line))
 	{

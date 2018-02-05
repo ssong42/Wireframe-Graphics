@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/27 12:57:07 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/05 09:56:07 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "libft/libft.h"
 #include "mlx.h"
+#include <math.h>
 #include <fcntl.h>
 # define WIN_X	1220
 # define WIN_Y	720
@@ -40,11 +41,11 @@ typedef struct	s_mouse
 
 typedef struct	s_vertic
 {
-	int		x;
-	int		y;
-	double	z;
+	double		x;
+	double		y;
+	double		z;
 	int		color;
-	int		w;
+	double		w;
 }				t_vertic;
 
 typedef struct	s_image
@@ -68,9 +69,9 @@ typedef struct	s_lines
 typedef struct	s_map
 {
 	t_vertic	*vertices;
-	int			x_width;
-	int			y_length;
-	int			scale;
+	double		x_width;
+	double		y_length;
+	double		scale;
 }				t_map;
 
 typedef struct	s_bundle
@@ -81,8 +82,14 @@ typedef struct	s_bundle
 	t_map	*map;
 	t_image	*img;
 	int		mousepressed;
-	int		x;
-	int		y;
+	int		ctrlpressed;
+	double	thetax;
+	double	thetay;
+	double	thetaz;
+	double	middle_x;
+	double	middle_y;
+	double	zoom;
+	
 }				t_bundle;
 
 int				get_next_line(int fd, char **line);
@@ -91,8 +98,18 @@ int				read_map(int fd, t_map **map);
 int				mouse_release(int button, int x, int y, t_bundle **bundle);
 int				mouse_move(int x, int y, t_bundle **bundle);
 int				mouse_click(int button, int x, int y, t_bundle **bundle);
+int				key_press(int button, t_bundle **bundle);
+int				key_release(int button, t_bundle **bundle);
 void			render(t_bundle *bundle);
 t_bundle		*shift_trans(t_bundle *bundle);
+t_bundle		*zoomin_trans(t_bundle *bundle);
+t_bundle		*zoomout_trans(t_bundle *bundle);
 void			new_image(t_bundle *bundle);
 void			putpicture(t_map *map, t_image *img);
+t_bundle		*rotate_x(t_bundle *bundle);
+t_bundle		*rotate_y(t_bundle *bundle);
+t_bundle		*rotate_z(t_bundle *bundle);
+t_bundle		*converttocenter(t_bundle *bundle);
+t_bundle		*rotate_trans(t_bundle *bundle);
+
 #endif

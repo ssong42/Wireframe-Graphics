@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 12:15:43 by ssong             #+#    #+#             */
-/*   Updated: 2018/01/27 13:33:12 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/05 09:51:21 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,17 @@ int		mouse_release(int button, int x, int y, t_bundle **bundle)
 
 int		mouse_move(int x, int y, t_bundle **bundle)
 {
-	if ((*bundle)->mousepressed == 1)
+	if ((*bundle)->mousepressed == 1 && (*bundle)->ctrlpressed == 1)
+	{
+		(*bundle)->mouse->prevx = (*bundle)->mouse->x;
+		(*bundle)->mouse->prevy = (*bundle)->mouse->y;
+		(*bundle)->mouse->x = x;
+		(*bundle)->mouse->y = y;
+		rotate_trans(*bundle);
+		new_image(*bundle);
+		
+	}
+	else if ((*bundle)->mousepressed == 1)
 	{
 		(*bundle)->mouse->prevx = (*bundle)->mouse->x;
 		(*bundle)->mouse->prevy = (*bundle)->mouse->y;
@@ -50,13 +60,38 @@ int		mouse_click(int button, int x, int y, t_bundle **bundle)
 		printf("%d (%d, %d)\n", button, x, y);
 		(*bundle)->mousepressed = 1;
 	}
+/*
 	if (button == 4)
 	{
-		(*bundle)->map->scale--;
+		if ((*bundle)->zoom > (*bundle)->map->x_width)
+			(*bundle)->zoom -= 2;
+		zoomout_trans(*bundle);
+		new_image(*bundle);
 	}
 	if (button == 5)
 	{
-		(*bundle)->map->scale++;
+		(*bundle)->zoom += 2;
+		zoomin_trans(*bundle);
+		new_image(*bundle);
+	}
+*/
+	return (0);
+}
+
+int key_press(int button, t_bundle **bundle)
+{
+	if (button == 256)
+	{
+		(*bundle)->ctrlpressed = 1;
+	}
+	return (0);
+}
+
+int key_release(int button, t_bundle **bundle)
+{
+	if (button == 256)
+	{
+		(*bundle)->ctrlpressed = 0;
 	}
 	return (0);
 }
@@ -69,5 +104,3 @@ int		mouse_click(int button, int x, int y, t_bundle **bundle)
  *	 button 6: scroll right
  *	 button 7: scroll left
  */
-
-
