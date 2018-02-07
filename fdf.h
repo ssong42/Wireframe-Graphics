@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/05 09:56:07 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/07 10:33:09 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ typedef struct	s_bundle
 	double	thetax;
 	double	thetay;
 	double	thetaz;
+	double	thetapx;
+	double	thetapy;
+	double	thetapz;
 	double	middle_x;
 	double	middle_y;
 	double	zoom;
@@ -110,6 +113,9 @@ t_bundle		*rotate_x(t_bundle *bundle);
 t_bundle		*rotate_y(t_bundle *bundle);
 t_bundle		*rotate_z(t_bundle *bundle);
 t_bundle		*converttocenter(t_bundle *bundle);
+t_bundle		*converttocenter2(t_bundle *bundle);
 t_bundle		*rotate_trans(t_bundle *bundle);
-
+t_bundle		*converttocenterimage(t_bundle *bundle);
+t_bundle		*portrayz(t_bundle *bundle);
+t_bundle		*revportrayz(t_bundle *bundle);
 #endif

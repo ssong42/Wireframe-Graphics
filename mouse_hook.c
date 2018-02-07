@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 12:15:43 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/05 09:51:21 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/07 11:55:24 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ int		mouse_move(int x, int y, t_bundle **bundle)
 		(*bundle)->mouse->prevy = (*bundle)->mouse->y;
 		(*bundle)->mouse->x = x;
 		(*bundle)->mouse->y = y;
+		converttocenter2(*bundle);
 		rotate_trans(*bundle);
+		converttocenterimage(*bundle);
 		new_image(*bundle);
 		
 	}
@@ -81,9 +83,9 @@ int		mouse_click(int button, int x, int y, t_bundle **bundle)
 int key_press(int button, t_bundle **bundle)
 {
 	if (button == 256)
-	{
 		(*bundle)->ctrlpressed = 1;
-	}
+	else if (button == 53)
+		exit(0);
 	return (0);
 }
 

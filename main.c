@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 10:54:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/05 10:18:59 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/07 14:36:26 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,12 @@ t_bundle	*initiate(t_bundle *bundle)
 	bundle->img = malloc(sizeof(t_image));
 	bundle->mouse = malloc(sizeof(t_mouse));
 	bundle->mouse->init = 0;
-	bundle->thetax = 0;
-	bundle->thetay = 0;
+	bundle->thetay = .7;
+	bundle->thetax = .7;
+	bundle->thetaz = 0;
+	bundle->thetapx = 0;
+	bundle->thetapy = 0;
+	bundle->thetaz = 0;
 	bundle->ctrlpressed = 0;
 	bundle->mlx = mlx_init();
 	bundle->win = mlx_new_window(bundle->mlx, WIN_X, WIN_Y, "mlx 42");
@@ -29,7 +33,7 @@ t_bundle	*initiate(t_bundle *bundle)
 	return (bundle);
 }
 
-void	putpicture(t_map *map, t_image *img)
+void		putpicture(t_map *map, t_image *img)
 {
 	int i;
 
@@ -38,13 +42,13 @@ void	putpicture(t_map *map, t_image *img)
 	{
 		if (map->vertices[i].x < WIN_X && map->vertices[i].x >= 0)
 			if (map->vertices[i].y < WIN_Y && map->vertices[i].y >= 0)
-				*(int *)(img->ptr + ((int)map->vertices[i].x * img->bpp  +
+				*(int *)(img->ptr + ((int)map->vertices[i].x * img->bpp +
 					((int)map->vertices[i].y * img->sizeline))) = map->vertices[i].color;
 		i++;
 	}
 }
 
-t_bundle *shift_trans(t_bundle *bundle)
+t_bundle	*shift_trans(t_bundle *bundle)
 {
 	int i;
 
@@ -63,7 +67,7 @@ t_bundle *shift_trans(t_bundle *bundle)
 	return (bundle);	
 }
 
-t_bundle *zoomout_trans(t_bundle *bundle)
+t_bundle	*zoomout_trans(t_bundle *bundle)
 {
 	int i;
 	
@@ -82,7 +86,7 @@ t_bundle *zoomout_trans(t_bundle *bundle)
 	return (bundle);
 }
 
-t_bundle *zoomin_trans(t_bundle *bundle)
+t_bundle	*zoomin_trans(t_bundle *bundle)
 {
 	int i;
 	
@@ -94,7 +98,7 @@ t_bundle *zoomin_trans(t_bundle *bundle)
 	return (bundle);
 }
 
-int main	(int argc, char **argv)
+int			main(int argc, char **argv)
 {
 	int			fd;
 	t_bundle 	*bundle;
@@ -117,11 +121,15 @@ int main	(int argc, char **argv)
 		return (0);
 	}
 	bundle = initiate(bundle);
-	bundle->middle_x = bundle->map->x_width * bundle->map->scale / 2;
-	bundle->middle_y = bundle->map->y_length * bundle->map->scale / 2;
+	bundle->middle_x = (bundle->map->x_width - 1) * bundle->map->scale / 2;
+	bundle->middle_y = (bundle->map->y_length - 1) * bundle->map->scale / 2;
 	converttocenter(bundle);
+	rotate_trans(bundle);
+	bressen_
+	converttocenterimage(bundle);
 	putpicture(bundle->map, bundle->img);
-	mlx_put_image_to_window(bundle->mlx, bundle->win, bundle->img->image, 0, 0);
+	mlx_put_image_to_window(bundle->mlx, bundle->win,
+			bundle->img->image, 0, 0);
 	mlx_hook(bundle->win, 2, 0, key_press, &bundle);
 	mlx_hook(bundle->win, 3, 0, key_release, &bundle);
 	mlx_hook(bundle->win, 4, 0, mouse_click, &bundle);

@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/21 18:08:50 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/05 09:49:11 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/07 11:33:04 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ t_map	*chartostruct(char **longmap, t_map *map)
 	{
 		map->vertices[i].x = i % (int)map->x_width * map->scale;
 		map->vertices[i].y = i / (int)map->x_width * map->scale;
-		map->vertices[i].z = (double)(ft_atoi(longmap[i]));
+		map->vertices[i].z = (double)(ft_atoi(longmap[i])) * map->scale;
 		map->vertices[i].w = 1;
 		map->vertices[i].color = 0xFFFFFF;
 		i++;
