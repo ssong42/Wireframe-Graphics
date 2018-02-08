@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 10:54:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/07 14:36:26 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/08 10:01:26 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ int			main(int argc, char **argv)
 	bundle->middle_y = (bundle->map->y_length - 1) * bundle->map->scale / 2;
 	converttocenter(bundle);
 	rotate_trans(bundle);
-	bressen_
+	bresenaham(bundle);
 	converttocenterimage(bundle);
 	putpicture(bundle->map, bundle->img);
 	mlx_put_image_to_window(bundle->mlx, bundle->win,
