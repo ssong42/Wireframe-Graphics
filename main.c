@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/20 10:54:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/08 10:01:26 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/10 17:28:15 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ t_bundle	*initiate(t_bundle *bundle)
 	bundle->img = malloc(sizeof(t_image));
 	bundle->mouse = malloc(sizeof(t_mouse));
 	bundle->mouse->init = 0;
-	bundle->thetay = .7;
-	bundle->thetax = .7;
+	bundle->thetay = 0;
+	bundle->thetax = 0;
 	bundle->thetaz = 0;
 	bundle->thetapx = 0;
 	bundle->thetapy = 0;
@@ -125,11 +125,10 @@ int			main(int argc, char **argv)
 	bundle->middle_y = (bundle->map->y_length - 1) * bundle->map->scale / 2;
 	converttocenter(bundle);
 	rotate_trans(bundle);
-	bresenaham(bundle);
 	converttocenterimage(bundle);
 	putpicture(bundle->map, bundle->img);
-	mlx_put_image_to_window(bundle->mlx, bundle->win,
-			bundle->img->image, 0, 0);
+	bresenham_leftright(bundle);
+	mlx_put_image_to_window(bundle->mlx, bundle->win, bundle->img->image, 0, 0);
 	mlx_hook(bundle->win, 2, 0, key_press, &bundle);
 	mlx_hook(bundle->win, 3, 0, key_release, &bundle);
 	mlx_hook(bundle->win, 4, 0, mouse_click, &bundle);

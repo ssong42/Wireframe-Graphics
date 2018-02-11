@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/18 15:04:20 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/07 10:33:09 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/09 11:26:14 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,4 +118,6 @@ t_bundle		*rotate_trans(t_bundle *bundle);
 t_bundle		*converttocenterimage(t_bundle *bundle);
 t_bundle		*portrayz(t_bundle *bundle);
 t_bundle		*revportrayz(t_bundle *bundle);
+t_bundle		*bresenham_leftright(t_bundle *bundle);
+
 #endif

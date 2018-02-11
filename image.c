@@ -6,7 +6,7 @@
 /*   By: ssong <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/01/27 12:17:21 by ssong             #+#    #+#             */
-/*   Updated: 2018/02/05 18:54:24 by ssong            ###   ########.fr       */
+/*   Updated: 2018/02/10 17:48:08 by ssong            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	new_image(t_bundle *bundle)
 {
 	clear_img(bundle->img);
 	putpicture(bundle->map, bundle->img);
+	bresenham_leftright(bundle);
 	mlx_put_image_to_window(bundle->mlx, bundle->win,
 			bundle->img->image, 0, 0);
 }
