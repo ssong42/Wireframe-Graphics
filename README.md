@@ -5,7 +5,6 @@ Render a 3d image from a file. The file will provide x, y, and z coordinates. Al
 
 # How to Run
 ```
-Ex.
 ./fdf maps/10-2.fdf
 ```
 There are more files inside the maps folder for you to choose from or create your own :D
