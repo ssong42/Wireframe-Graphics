@@ -10,7 +10,7 @@ Ex.
 ```
 There are more files inside the maps folder for you to choose from or create your own :D
 
-#Controls:
+# Controls:
 
 MOUSE:
 Left_Click+Move = Translate Image
