@@ -12,8 +12,8 @@ There are more files inside the maps folder for you to choose from or create you
 
 # Controls:
 
-MOUSE:
-Left_Click+Move = Translate Image
-Ctrl+Left_Click+Move = Rotate Image
-Scroll Up = Zoom In
-Scroll Down = Zoom out
+MOUSE COMMANDS: <br /> 
+Translate Image = left_click & move mouse <br /> 
+Rotate Image = control + left_click & move mouse <br />
+Zoom In = Scroll Up <br />
+Zoom out = Scroll Down
